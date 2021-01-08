@@ -22,18 +22,64 @@ def bubble_sort(A):
 
 def insertion_sort(A):
     for i in range(1,len(A)):
-        current_ele = A[i]
-        pos = i
-        while current_ele<A[pos-1]and pos>0:
-            A[pos] = A[pos-1]
-            pos = pos -1
-        A[pos] = current_ele
+        j = i -1 #prev index of current element
+        while A[j]>A[j+1] and j>=0:
+            A[j],A[j+1]=A[j+1],A[j]
+            j =-1
     return A
 
+def quick_sort(arr):
+    if len(arr)<=1:
+        return arr
+    else:
+        pivot = arr.pop()
 
+    lesser = []
+    greater = []
+    for i in arr: #comparing elements present in arr with pivot
+        if i>pivot:
+            greater.append(i)
+        else:
+            lesser.append(i)
+    return quick_sort(lesser)+[pivot]+quick_sort(greater)
+
+def mergeSort(arr):
+    if len(arr) > 1:
+        # Finding the mid of the array
+        mid = len(arr) // 2
+        # Dividing the array elements
+        L = arr[:mid]
+        # into 2 halves
+        R = arr[mid:]
+        # Sorting the first half
+        mergeSort(L)
+        # Sorting the second half
+        mergeSort(R)
+        i = j = k = 0
+        # Copy data to temp arrays L[] and R[]
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]:
+                arr[k] = L[i]
+                i += 1
+            else:
+                arr[k] = R[j]
+                j += 1
+            k += 1
+        # Checking if any element was left
+        while i < len(L):
+            arr[k] = L[i]
+            i += 1
+            k += 1
+        while j < len(R):
+            arr[k] = R[j]
+            j += 1
+            k += 1
+    return arr
 
 
 A = [23,45,11,22,54]
 print (selection_sort(A))
 print (bubble_sort(A))
 print (insertion_sort(A))
+print (quick_sort(A))
+print (mergeSort(A))
